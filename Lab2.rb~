@@ -1,0 +1,101 @@
+class HelloWorldClass
+	def initialize(name)
+		@name = name.capitalize
+	end
+	def sayHi
+		puts "Hello #{@name}!"
+	end
+end
+hello = HelloWorldClass.new("Matthew")
+puts "Part 1 - Hello World"
+hello.sayHi
+puts
+
+def palindrome?(string)
+	input = string.downcase
+	compareTo = input.reverse
+	print string + " = "
+	puts input == compareTo
+end
+
+def count_words(string)
+	toReturn = Hash.new(0)
+	lowerString = string.downcase
+	words = lowerString.split(/\W+/)
+	words.each {|word| toReturn[word] += 1}
+	puts toReturn
+end
+puts "Part 2 - Strings"
+puts "Palindromes"
+palindrome?("Matt")
+palindrome?("racecar")
+puts
+puts "Word Count"
+count_words("Hi, my name is Matt")
+count_words("Doo bee doo bee doo")
+puts
+
+class WrongNumberOfPlayersError < StandardError ; end
+class NoSuchStrategyError < StandardError ; end
+
+def rps_game_winner(game)
+	game[0][1] = game[0][1].downcase
+	game[1][1] = game[1][1].downcase
+	if game.size != 2
+		raise WrongNumberOfPlayersError
+	elsif !(game[0][1] != "r" || game[0][1] != "p" || game[0][1] != "s")
+		raise NoSuchStrategyError
+	elsif !(game[1][1] != "r" || game[1][1] != "p" || game[1][1] != "s")
+		raise NoSuchStrategyError
+	else
+		if game[0][1] == "r" && game[1][1] == "p"
+			return game[1]
+		elsif game[0][1] == "r" && game[1][1] == "s"
+			return game[0]
+		elsif game[0][1] == "r" && game[1][1] == "r"
+			return game[0]
+		elsif game[0][1] == "p" && game[1][1] == "p"
+			return game[0]
+		elsif game[0][1] == "p" && game[1][1] == "s"
+			return game[1]
+		elsif game[0][1] == "p" && game[1][1] == "r"
+			return game[0]
+		elsif game[0][1] == "s" && game[1][1] == "p"
+			return game[0]
+		elsif game[0][1] == "s" && game[1][1] == "s"
+			return game[0]
+		elsif game[0][1] == "s" && game[1][1] == "r"
+			return game[1]
+		end
+	end
+end
+
+def rps_tournament_winner(game)
+	if game.first.first.kind_of?(Array)
+		left = rps_tournament_winner(game[0])
+		right = rps_tournament_winner(game[1])
+	else
+		left = game[0]
+		right = game[1]
+	end
+	return rps_game_winner([left,right])
+end
+puts "Part 3 - Rock Paper Scissors"
+print rps_tournament_winner([[["Matt","r"],["Will","s"]],[["Bob","s"],["Rob","p"]]])
+puts
+print rps_tournament_winner([[["Matt","p"],["Will","s"]],[["Bob","r"],["Rob","r"]]])
+puts
+print rps_tournament_winner([["Matt","r"],["Will","r"]])
+puts
+
+def combine_anagrams(words)
+	puts words
+	words.each {words.downcase}
+	puts words
+	words.each {|word| word = word.chars.sort}
+	puts words
+end
+puts "Part 4 - Anagrams"
+puts combine_anagrams(['Cars','for','potatoes', 'racs', 'four', 'scar', 'creams', 'scream'])
+
+
