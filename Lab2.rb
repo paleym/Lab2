@@ -1,3 +1,9 @@
+=begin
+Assignment: Lab 2
+Author: Matthew Paley
+Date: 9/11/2013
+=end
+
 class HelloWorldClass
 	def initialize(name)
 		@name = name.capitalize
@@ -87,15 +93,14 @@ print rps_tournament_winner([[["Matt","p"],["Will","s"]],[["Bob","r"],["Rob","r"
 puts
 print rps_tournament_winner([["Matt","r"],["Will","r"]])
 puts
+puts
 
 def combine_anagrams(words)
-	puts words
-	words.each {|i| words[i].downcase}
-	puts words
-	words.each {|word| word = word.chars.sort}
-	puts words
+	anagrams = words.group_by {|word| word.downcase.chars.sort}.values
+	return anagrams
 end
 puts "Part 4 - Anagrams"
-puts combine_anagrams(['Cars','for','potatoes', 'racs', 'four', 'scar', 'creams', 'scream'])
+print combine_anagrams(['Cars','for','potatoes', 'racs', 'four', 'scar', 'creams', 'scream'])
+puts
 
 
